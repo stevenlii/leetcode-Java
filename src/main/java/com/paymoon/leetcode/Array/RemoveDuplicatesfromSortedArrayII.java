@@ -1,6 +1,6 @@
 package com.paymoon.leetcode.Array;
 
-public class RemoveDuplicatesfromSortedArray {
+public class RemoveDuplicatesfromSortedArrayII {
 public static void main(String[] args) {
 	String[] strings = {"1","2","3","3","3","4","4","5"};
 	String value = "5";
@@ -13,18 +13,10 @@ public static String remove(String[] strings, String value) {
 		return "0";
 	}
 	   int j = 0;
-	   int num = 0;
        for(int i = 1; i < strings.length; i++) {
-           if(strings[j] == strings[i]) {
-               num++;
-               if (num < 2) {
-            	   strings[++j] = strings[i];
-				
-			}
-           }else {
-        	   strings[++j] = strings[i];
-        	   num = 0;
-		}
+           if(strings[j] != strings[i]) {
+               strings[++j] = strings[i];
+           }
        }
    //	System.out.println(strings.length);
 	for (int j2 = 0; j2 < strings.length; j2++) {

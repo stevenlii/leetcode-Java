@@ -45,6 +45,14 @@ import java.util.Map;
  * 3.5，基于3.4，必须使用resultList存入结果，stringbuffer只能当做变量了。
  * 判断当stringbuffer append到叶子结点（len=入参）时，resultList进行存入。stringbuffer删除叶子节点，进行下一次递归。
  */
+/**
+ * 比起上一次提交中
+    在递归里面
+    改了一下resultList.add(sBuffer.toString());的位置
+    加了一个if-else。
+    官方的这一步确实很"递归"。在结束条件里面，才可以有这种操作
+ *
+ */
 class Leetcode017 {
 	public List<String> letterCombinations(String digits) {
 		Map<Character, List<String>> phoneNumberMap = new HashMap<>();
@@ -83,21 +91,19 @@ class Leetcode017 {
 	private void backtrace(int index, int digitsLen, List<List<String>> list, StringBuffer sBuffer,
 			List<String> resultList) {
 		if (index == digitsLen) {
-			return;
-		}
-		List<String> currentList = list.get(index);
-		for (int i = 0; i < currentList.size(); i++) {
-			sBuffer.append(currentList.get(i));
-			backtrace(index + 1, digitsLen, list, sBuffer, resultList);
-			if (sBuffer.toString().length() == digitsLen) {
-				resultList.add(sBuffer.toString());
+			resultList.add(sBuffer.toString());
+		}else {
+			List<String> currentList = list.get(index);
+			for (int i = 0; i < currentList.size(); i++) {
+				sBuffer.append(currentList.get(i));
+				backtrace(index + 1, digitsLen, list, sBuffer, resultList);
+				sBuffer.deleteCharAt(sBuffer.toString().length() - 1);
 			}
-			sBuffer.deleteCharAt(sBuffer.toString().length() - 1);
 		}
 	}
 
 	public static void main(String[] args) {
 
-		System.out.println(new Leetcode017().letterCombinations("7"));
+		System.out.println(new Leetcode017().letterCombinations("23"));
 	}
 }

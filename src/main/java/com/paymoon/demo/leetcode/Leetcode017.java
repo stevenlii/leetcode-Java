@@ -1,10 +1,14 @@
 package com.paymoon.demo.leetcode;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * 17. 电话号码的字母组合
@@ -92,18 +96,32 @@ class Leetcode017 {
 			List<String> resultList) {
 		if (index == digitsLen) {
 			resultList.add(sBuffer.toString());
-		}else {
+			return;
+		}
+
 			List<String> currentList = list.get(index);
 			for (int i = 0; i < currentList.size(); i++) {
 				sBuffer.append(currentList.get(i));
 				backtrace(index + 1, digitsLen, list, sBuffer, resultList);
 				sBuffer.deleteCharAt(sBuffer.toString().length() - 1);
-			}
 		}
 	}
 
 	public static void main(String[] args) {
 
 		System.out.println(new Leetcode017().letterCombinations("23"));
+		System.out.println(getISO8601Timestamp(new Date()));
 	}
+    /** 
+     * 传入Data类型日期，返回字符串类型时间（ISO8601标准时间） 
+     * @param date 
+     * @return 
+     */  
+    public static String getISO8601Timestamp(Date date){  
+        TimeZone tz = TimeZone.getTimeZone("Asia/Shanghai");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");  
+        df.setTimeZone(tz);  
+        String nowAsISO = df.format(date); 
+        return nowAsISO;  
+    }  
 }
